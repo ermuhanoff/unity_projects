@@ -101,4 +101,8 @@ public class Character : MonoBehaviour
             animator_rig.SetBool(name, true);
         }
     }
+
+    public void AnimDeathEnd() {
+        Destroy(gameObject);
+    }
 }
