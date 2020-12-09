@@ -6,6 +6,7 @@ namespace Game
     public class Enemy : Entity
     {
         public GameObject character;
+
         void FixedUpdate()
         {
             Move();
@@ -17,33 +18,39 @@ namespace Game
             if (is_dead)
             {
                 gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                character.GetComponent<Character>().EnemyDead(gameObject.GetComponent<BoxCollider>());
+                character.GetComponent<Character>().EnemyDead(gameObject.GetComponent<CapsuleCollider>());
                 SetAnimation("ISDEAD");
             }
             else if (is_firing)
             {
                 gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 SetAnimation("FIRING");
-                // weapon.Fire();
+                weapon.Fire();
             }
             else if (is_running)
             {
-                gameObject.GetComponent<Rigidbody>().velocity = transform.transform.forward * speed;
+                gameObject.GetComponent<Rigidbody>().velocity = transform.forward * speed;
                 SetAnimation("RUNNING");
             }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.name == "character")
+            if (other.tag == "character" && other.GetType().ToString() != "UnityEngine.SphereCollider")
+            {
                 is_firing = true;
+                is_running = false;
+            }
 
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.name == "character")
+            if (other.tag == "character" && other.GetType().ToString() != "UnityEngine.SphereCollider")
+            {
                 is_firing = false;
+                is_running = true;
+            }
         }
         public void AnimDeathEnd()
         {

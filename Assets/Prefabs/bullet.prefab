@@ -9813,3 +9813,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hit: {fileID: 215668479424284248, guid: 03fb04f8a9ca964409fb7153f0f03a81, type: 3}
   muzzle: {fileID: 5758920775995708881, guid: 9ba69b08339afaf4cb2a2fd091c374ce, type: 3}
+  bullet_damage: 10

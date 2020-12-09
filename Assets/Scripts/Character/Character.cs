@@ -19,9 +19,9 @@ namespace Game
 
         void FixedUpdate()
         {
+            InputController();
             if (enemies.Count == 0) is_firing = false;
             else is_firing = true;
-            InputController();
             Move();
         }
 
@@ -44,18 +44,14 @@ namespace Game
 
         public void EnemyDead(Collider c)
         {
-            Debug.Log(c.tag);
             enemies.Remove(c);
-            Debug.Log(enemies);
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.tag == "enemy" && other.GetType().ToString() != "UnityEngine.SphereCollider")
             {
-                Debug.Log(other.tag);
                 enemies.Insert(enemies.Count, other);
-                Debug.Log(enemies);
             }
 
         }
@@ -64,9 +60,7 @@ namespace Game
         {
             if (other.tag == "enemy" && other.GetType().ToString() != "UnityEngine.SphereCollider")
             {
-                Debug.Log(other.tag);
                 enemies.Remove(other);
-                Debug.Log(enemies);
             }
 
         }
@@ -77,6 +71,9 @@ namespace Game
             {
                 var e = enemies[0];
                 gameObject.transform.LookAt(e.transform);
+                // if (gameObject.transform.forward == e.transform.forward);
+                Debug.Log(weapon.transform.forward);
+                Debug.Log(e.transform.forward);
                 weapon.Fire();
             }
         }

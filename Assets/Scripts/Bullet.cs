@@ -19,9 +19,9 @@ namespace Game
         {
             if (other.GetType().ToString() != "UnityEngine.SphereCollider")
             {
-                
 
-                other.GetComponent<Entity>().Damage(bullet_damage);
+                if (other.tag == "enemy" || other.tag == "character")
+                    other.GetComponent<Entity>().Damage(bullet_damage);
                 // other.contactOffset
                 // }
                 // private void OnCollisionEnter(Collision other)
