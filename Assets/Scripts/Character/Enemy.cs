@@ -5,7 +5,7 @@ namespace Game
 {
     public class Enemy : Entity
     {
-        public Transform character_pos;
+        public GameObject character;
         void FixedUpdate()
         {
             Move();
@@ -13,15 +13,20 @@ namespace Game
 
         public void Move()
         {
-            transform.LookAt(character_pos);
-
-            if (weapon.is_firing)
+            transform.LookAt(character.transform);
+            if (is_dead)
+            {
+                gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                character.GetComponent<Character>().EnemyDead(gameObject.GetComponent<BoxCollider>());
+                SetAnimation("ISDEAD");
+            }
+            else if (is_firing)
             {
                 gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 SetAnimation("FIRING");
-                weapon.Fire();
+                // weapon.Fire();
             }
-            else
+            else if (is_running)
             {
                 gameObject.GetComponent<Rigidbody>().velocity = transform.transform.forward * speed;
                 SetAnimation("RUNNING");
@@ -31,14 +36,19 @@ namespace Game
         private void OnTriggerEnter(Collider other)
         {
             if (other.name == "character")
-                weapon.is_firing = true;
+                is_firing = true;
 
         }
 
         private void OnTriggerExit(Collider other)
         {
             if (other.name == "character")
-                weapon.is_firing = false;
+                is_firing = false;
+        }
+        public void AnimDeathEnd()
+        {
+            // animator.Play("enemy_after_die");
+            Destroy(gameObject);
         }
     }
 }

@@ -9,10 +9,8 @@ namespace Game
         public GameObject muzzle;
         public GameObject bullet;
         public Transform bullet_start;
-        public Transform entity_pos;
         public int fireTimeToShoot = 10;
         public float bulletSpeed;
-        public bool is_firing = false;
          
         private int fireSate = 0;
 
@@ -26,7 +24,7 @@ namespace Game
             {
                 fireSate = 0;
 
-                GameObject m = Instantiate(muzzle, new Vector3(bullet_start.position.x, bullet_start.position.y, bullet_start.position.z), entity_pos.rotation);
+                GameObject m = Instantiate(muzzle, new Vector3(bullet_start.position.x, bullet_start.position.y, bullet_start.position.z), bullet_start.rotation);
                 var main = m.GetComponentInChildren<ParticleSystem>().main;
 
 
@@ -39,9 +37,9 @@ namespace Game
                     Destroy(m, psChid.main.duration);
                 }
 
-                GameObject b = Instantiate(bullet, bullet_start.position, entity_pos.rotation);
+                GameObject b = Instantiate(bullet, bullet_start.position, bullet_start.rotation);
 
-                b.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * bulletSpeed);
+                b.GetComponent<Rigidbody>().velocity = transform.TransformDirection(b.transform.forward * bulletSpeed);
             }
             else fireSate++;
         }

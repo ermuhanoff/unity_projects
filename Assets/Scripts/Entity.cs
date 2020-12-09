@@ -11,13 +11,15 @@ namespace Game
         public Animator animator_rig;
         public Weapon weapon;
 
-        // void FixedUpdate()
-        // {
-        //     Debug.Log("HEre");
-        //     Move();
-        // }
+        public float health = 100f;
+        public bool is_dead = false;
+        public bool is_running = false;
+        public bool is_firing = false;
+        public Vector3 velocity;
 
-        // public void Move() { }
+        private void Update() {
+            if (health <= 0) is_dead = true;
+        }
 
         public void SetAnimation(string name)
         {
@@ -37,10 +39,11 @@ namespace Game
             }
         }
 
-        public void AnimDeathEnd()
-        {
-            Destroy(gameObject);
+        public void Damage(float value) {
+            health -= value;
         }
+
+        
     }
 
 }
